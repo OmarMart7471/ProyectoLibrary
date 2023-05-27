@@ -8,32 +8,88 @@
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
     <!-- <link rel="stylesheet" href="./assets/styles/styles.css" /> -->
     <script defer src="https://unpkg.com/alpinejs@3.2.2/dist/cdn.min.js"></script>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/search.css">
 </head>
 <body>
 
 <body class="bg-white">
 
+  <div class="flex justify-end m-4 px-5 md:order-2">
+    <button type="button" class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+      <span class="sr-only">Open user menu</span>
+      <svg class="rounded-full w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+    </button>
+    <!-- Dropdown menu -->
+    <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+        <div class="px-4 py-3">
+          <span class="block text-sm text-gray-900 dark:text-white">Nombre usuario</span>
+          <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">corrreo_usuario@gmail.com</span>
+        </div>
+        <ul class="py-2" aria-labelledby="user-menu-button">
+          <li class="flex flex-grow items-center justify-center">
+            <a href="#" 
+              class="flex ml-2 justify-center"
+              type="button" data-drawer-target="drawer-swipe" data-drawer-show="drawer-swipe" data-drawer-placement="bottom" data-drawer-edge="true" data-drawer-edge-offset="bottom-[60px]" aria-controls="drawer-swipe"
+            >
+              <span class="[&>svg]:w-5 order-last ">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-8 w-8 ml-5">
+                  <path d="M2.25 2.25a.75.75 0 000 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 00-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 000-1.5H5.378A2.25 2.25 0 017.5 15h11.218a.75.75 0 00.674-.421 60.358 60.358 0 002.96-7.228.75.75 0 00-.525-.965A60.864 60.864 0 005.68 4.509l-.232-.867A1.875 1.875 0 003.636 2.25H2.25zM3.75 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM16.5 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z" />
+                </svg>
+              </span>
+              Carrito
+            </a>
+          </li>
+        </ul>
+    </div>
+</div>
+
   <div class="pt-10  bg-white">
-  <h1 class="text-center text-2xl font-bold text-gray-800">DIBUJARTE</h1>
+  <h1 class="text-center text-2xl font-bold text-gray-800">LIBRARTE</h1>
   </div>
   
   <!-- Tab Menu -->
-  <div class="flex flex-wrap items-center  overflow-x-auto overflow-y-hidden py-10 justify-center   bg-white text-gray-800">
-      <div class="flex items-center p-6 space-x-6 bg-white rounded-xl ">
-        <div class="flex bg-gray-100 p-4 w-72 space-x-4 rounded-lg">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-          <input class="bg-gray-100 outline-none" type="text" placeholder="Introduzca su búsqueda..." />
-        </div>
-        <div class="flex py-3 px-4 rounded-lg text-gray-500 font-semibold cursor-pointer">
-          <span>Búsqueda por...</span>
-  
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
-        </div>
+  <div class=" flex flex-row justify-center">
+    <div class=" p-12 w-full sm:max-w-2xl sm:mx-auto">
+      <div class="overflow-hidden z-0 rounded-full relative p-3">
+        <form role="form" class="relative flex z-50 bg-white rounded-full">
+          <input type="text" placeholder="Introduce tu búsqueda" class="rounded-full flex-1 px-6 py-4 text-gray-700 outline-slate-50 ">
+
+          <button id="dropdownRadioButton" data-dropdown-toggle="dropdownDefaultRadio" class="text-white rounded-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+            Búsqueda por... 
+          <svg class="w-2 h-2 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+
+        </form>
+        <div class="glow glow-1 z-10 bg-pink-400 absolute"></div>
+        <div class="glow glow-2 z-20 bg-green-400 absolute"></div>
+        <div class="glow glow-3 z-30 bg-yellow-400 absolute"></div>
+        <div class="glow glow-4 z-20 bg-blue-400 absolute"></div>
       </div>
+    </div>
+              <!-- Dropdown menu -->
+              <div id="dropdownDefaultRadio" class="z-10 hidden w-48 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
+                <ul class="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioButton">
+                  <li>
+                    <div class="flex items-center">
+                        <input id="default-radio-1" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Autor</label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="flex items-center">
+                        <input checked id="default-radio-2" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">ISBN</label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="flex items-center">
+                        <input id="default-radio-3" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="default-radio-3" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Titulo</label>
+                    </div>
+                  </li>
+                </ul>
+            </div>
   </div>
   
   <!-- Product List -->
@@ -51,7 +107,7 @@
               <img src="https://images.gr-assets.com/books/1361975680l/2657.jpg" class="w-full" />
               <a href="#!">
                 <div
-                  class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 hover:scale-150 hover:opacity-100 transition duration-300 ease-in-out"
+                  class="absolute  top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 hover:shadow-xl hover:transform hover:scale-105 duration-300 hover:opacity-100 transition duration-300 ease-in-out"
                   style="background-color: rgba(251, 251, 251, 0.15)"></div>
               </a>
             </div>
@@ -74,5 +130,8 @@
       </div>
 
   </section>
-  </body>
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+  
+</body>
 </html>
