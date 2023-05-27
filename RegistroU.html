@@ -242,40 +242,47 @@
     // Array para almacenar los datos de los usuarios registrados
     var usuariosRegistrados = [];
 
-    function mostrarMensajeRegistro() {
-      // Obtener los valores ingresados por el usuario
-      var fullName = document.getElementById("full_name").value;
-      var userName = document.getElementById("user_name").value;
-      var password = document.getElementById("password").value;
-      var email = document.getElementById("email").value;
-      var address = document.getElementById("address").value;
-      var city = document.getElementById("city").value;
-      var country = document.getElementById("country").value;
-      var state = document.getElementById("state").value;
-      var zipcode = document.getElementById("zipcode").value;
+    // Función para mostrar el mensaje de registro y almacenar los datos en localStorage
+  function mostrarMensajeRegistro() {
+    // Obtener los valores ingresados por el usuario
+    var fullName = document.getElementById("full_name").value;
+    var userName = document.getElementById("user_name").value;
+    var password = document.getElementById("password").value;
+    var email = document.getElementById("email").value;
+    var address = document.getElementById("address").value;
+    var city = document.getElementById("city").value;
+    var country = document.getElementById("country").value;
+    var state = document.getElementById("state").value;
+    var zipcode = document.getElementById("zipcode").value;
 
-      // Crear un objeto con los datos del usuario
-      var usuario = {
-        fullName: fullName,
-        userName: userName,
-        password: password,
-        email: email,
-        address: address,
-        city: city,
-        country: country,
-        state: state,
-        zipcode: zipcode
-      };
+    // Crear un objeto con los datos del usuario
+    var usuario = {
+      fullName: fullName,
+      userName: userName,
+      password: password,
+      email: email,
+      address: address,
+      city: city,
+      country: country,
+      state: state,
+      zipcode: zipcode
+    };
 
-      // Agregar el usuario al array de usuarios registrados
-      usuariosRegistrados.push(usuario);
+    // Agregar el usuario al array de usuarios registrados
+    usuariosRegistrados.push(usuario);
 
-      // Mostrar el mensaje de registro exitoso y los datos del usuario registrado
-      alert("Registro exitoso:\n\n" + JSON.stringify(usuario, null, 2));
-    }
+    // Mostrar el mensaje de registro exitoso y los datos del usuario registrado
+    alert("Registro exitoso:\n\n" + JSON.stringify(usuario, null, 2));
 
-    // Evento click del botón de registro
-    document.getElementById("registrarButton").addEventListener("click", mostrarMensajeRegistro);
+    // Convertir el array de usuarios registrados a una cadena JSON
+    var usuariosRegistradosJSON = JSON.stringify(usuariosRegistrados);
+
+    // Almacenar la cadena JSON en localStorage
+    localStorage.setItem("usuariosRegistrados", usuariosRegistradosJSON);
+  }
+
+  // Evento click del botón de registro
+  document.getElementById("registrarButton").addEventListener("click", mostrarMensajeRegistro);
   </script>
   
     
