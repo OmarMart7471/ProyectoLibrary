@@ -42,6 +42,15 @@
         }
       }
     </style>
+    <style>
+      .campo-vacio {
+        border: 1px solid red;
+      }
+    
+      .mensaje-error {
+        color: red;
+      }
+    </style>
   </head>
   <body class="bg-blue-50" style="background-image: url('images/libreria1.jpeg');">
 
@@ -237,12 +246,13 @@
       </div>
 
   </div>
+<!-- Incluir SweetAlert2 desde el CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  // Array para almacenar los datos de los usuarios registrados
+  var usuariosRegistrados = [];
 
-  <script>
-    // Array para almacenar los datos de los usuarios registrados
-    var usuariosRegistrados = [];
-
-    // Función para mostrar el mensaje de registro y almacenar los datos en localStorage
+  // Función para mostrar el mensaje de registro y almacenar los datos en localStorage
   function mostrarMensajeRegistro() {
     // Obtener los valores ingresados por el usuario
     var fullName = document.getElementById("full_name").value;
@@ -255,24 +265,89 @@
     var state = document.getElementById("state").value;
     var zipcode = document.getElementById("zipcode").value;
 
+    // Verificar si los campos obligatorios están vacíos
+    var camposVacios = false;
+
+    if (fullName.trim() === "") {
+      document.getElementById("full_name").classList.add("campo-vacio");
+      camposVacios = true;
+    } else {
+      document.getElementById("full_name").classList.remove("campo-vacio");
+    }
+
+    if (userName.trim() === "") {
+      document.getElementById("user_name").classList.add("campo-vacio");
+      camposVacios = true;
+    } else {
+      document.getElementById("user_name").classList.remove("campo-vacio");
+    }
+
+    if (password.trim() === "") {
+      document.getElementById("password").classList.add("campo-vacio");
+      camposVacios = true;
+    } else {
+      document.getElementById("password").classList.remove("campo-vacio");
+    }
+
+    // Verificar si hay campos vacíos
+    if (camposVacios) {
+      // Mostrar mensaje de error con SweetAlert2
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Todos los campos obligatorios deben ser completados.',
+      });
+      return;
+    }
+
     // Crear un objeto con los datos del usuario
     var usuario = {
-      fullName: fullName,
-      userName: userName,
-      password: password,
-      email: email,
-      address: address,
-      city: city,
-      country: country,
-      state: state,
-      zipcode: zipcode
+      'Nombre': fullName,
+      'Usuario': userName,
+      'Password': password,
+      'Email': email,
+      'Address': address,
+      'Ciudad': city,
+      'País': country,
+      'Estado': state,
+      'Código Postal': zipcode
     };
 
     // Agregar el usuario al array de usuarios registrados
     usuariosRegistrados.push(usuario);
 
-    // Mostrar el mensaje de registro exitoso y los datos del usuario registrado
-    alert("Registro exitoso:\n\n" + JSON.stringify(usuario, null, 2));
+    // Construir el mensaje de registro exitoso con los datos del usuario
+    var mensajeRegistro = '<div style="text-align: left;">';
+    mensajeRegistro += '<h4>Datos del usuario registrado:</h4>';
+    mensajeRegistro += '<p><strong>Nombre :</strong> ' + fullName + '</p>';
+    mensajeRegistro += '<p><strong>Usuario :</strong> ' + userName + '</p>';
+    mensajeRegistro += '<p><strong>Password:</strong> ' + password + '</p>';
+    mensajeRegistro += '<p><strong>Email:</strong> ' + email + '</p>';
+    mensajeRegistro += '<p><strong>Address:</strong> ' + address + '</p>';
+    mensajeRegistro += '<p><strong>Ciudad :</strong> ' + city + '</p>';
+    mensajeRegistro += '<p><strong>País:</strong> ' + country + '</p>';
+    mensajeRegistro += '<p><strong>Estado :</strong> ' + state + '</p>';
+    mensajeRegistro += '<p><strong>Código Postal :</strong> ' + zipcode + '</p>';
+    mensajeRegistro += '</div>';
+
+    // Mostrar el mensaje de registro exitoso y los datos del usuario registrado con SweetAlert2
+    Swal.fire({
+      icon: 'success',
+      title: 'Registro exitoso',
+      html: mensajeRegistro,
+      onClose: function() {
+        // Limpiar los campos del formulario
+        document.getElementById("full_name").value = "";
+        document.getElementById("user_name").value = "";
+        document.getElementById("password").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("address").value = "";
+        document.getElementById("city").value = "";
+        document.getElementById("country").value = "";
+        document.getElementById("state").value = "";
+        document.getElementById("zipcode").value = "";
+      }
+    });
 
     // Convertir el array de usuarios registrados a una cadena JSON
     var usuariosRegistradosJSON = JSON.stringify(usuariosRegistrados);
@@ -283,8 +358,8 @@
 
   // Evento click del botón de registro
   document.getElementById("registrarButton").addEventListener("click", mostrarMensajeRegistro);
-  </script>
-  
+</script>
+
     
 
 </body>
