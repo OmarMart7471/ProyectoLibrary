@@ -264,6 +264,7 @@
     var country = document.getElementById("country").value;
     var state = document.getElementById("state").value;
     var zipcode = document.getElementById("zipcode").value;
+    
 
     // Verificar si los campos obligatorios están vacíos
     var camposVacios = false;
@@ -288,6 +289,53 @@
     } else {
       document.getElementById("password").classList.remove("campo-vacio");
     }
+
+    if (email.trim() === "") {
+      document.getElementById("email").classList.add("campo-vacio");
+      camposVacios = true;
+    } else {
+      document.getElementById("email").classList.remove("campo-vacio");
+    }
+
+    if (address.trim() === "") {
+      document.getElementById("address").classList.add("campo-vacio");
+      camposVacios = true;
+    } else {
+      document.getElementById("address").classList.remove("campo-vacio");
+    }
+
+    if (city.trim() === "") {
+      document.getElementById("city").classList.add("campo-vacio");
+      camposVacios = true;
+    } else {
+      document.getElementById("city").classList.remove("campo-vacio");
+    }
+
+    if (country.trim() === "") {
+      document.getElementById("country").classList.add("campo-vacio");
+      camposVacios = true;
+    } else {
+      document.getElementById("country").classList.remove("campo-vacio");
+    }
+
+    if (state.trim() === "") {
+      document.getElementById("state").classList.add("campo-vacio");
+      camposVacios = true;
+    } else {
+      document.getElementById("state").classList.remove("campo-vacio");
+    }
+
+    if (zipcode.trim() === "") {
+      document.getElementById("zipcode").classList.add("campo-vacio");
+      camposVacios = true;
+    } else {
+      document.getElementById("zipcode").classList.remove("campo-vacio");
+    }
+
+    
+
+
+
 
     // Verificar si hay campos vacíos
     if (camposVacios) {
