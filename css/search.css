@@ -13,7 +13,7 @@
   
   .glow-2 {
     animation: glow2 4s linear infinite;
-    animation-delay: 100ms;
+    animation-delay: 200ms;
   }
   
   .glow-3 {
@@ -97,4 +97,21 @@
       transform: translate(10%, -10%) scale(1);
     }
   }
+
+  nav , body {
+    background: rgb(131,58,180);
+    background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(196,119,119,1) 52%, rgba(252,176,69,1) 100%);
+    box-shadow: 0px 10px 10px -6px black;
+  }
+
+  h1 {
+    font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    color: #2f1ead;
+    background: #912C22;
+    text-shadow: 0 0 10px #FFFFFF;
+    color: #FFFFFF;
+    background: #912C22;
+    
+  }
+
   
