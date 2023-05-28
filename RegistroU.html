@@ -249,9 +249,9 @@
 <!-- Incluir SweetAlert2 desde el CDN -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+ 
   // Array para almacenar los datos de los usuarios registrados
   var usuariosRegistrados = [];
-
   // Función para mostrar el mensaje de registro y almacenar los datos en localStorage
   function mostrarMensajeRegistro() {
     // Obtener los valores ingresados por el usuario
@@ -264,7 +264,6 @@
     var country = document.getElementById("country").value;
     var state = document.getElementById("state").value;
     var zipcode = document.getElementById("zipcode").value;
-    
 
     // Verificar si los campos obligatorios están vacíos
     var camposVacios = false;
@@ -332,13 +331,8 @@
       document.getElementById("zipcode").classList.remove("campo-vacio");
     }
 
-    
-
-
-
-
-    // Verificar si hay campos vacíos
-    if (camposVacios) {
+     // Verificar si hay campos vacíos
+     if (camposVacios) {
       // Mostrar mensaje de error con SweetAlert2
       Swal.fire({
         icon: 'error',
@@ -348,22 +342,23 @@
       return;
     }
 
+
     // Crear un objeto con los datos del usuario
     var usuario = {
-      'Nombre': fullName,
-      'Usuario': userName,
-      'Password': password,
-      'Email': email,
-      'Address': address,
-      'Ciudad': city,
-      'País': country,
-      'Estado': state,
-      'Código Postal': zipcode
+      fullName: fullName,
+      userName: userName,
+      password: password,
+      email: email,
+      address: address,
+      city: city,
+      country: country,
+      state: state,
+      zipcode: zipcode
     };
 
     // Agregar el usuario al array de usuarios registrados
     usuariosRegistrados.push(usuario);
-
+    
     // Construir el mensaje de registro exitoso con los datos del usuario
     var mensajeRegistro = '<div style="text-align: left;">';
     mensajeRegistro += '<h4>Datos del usuario registrado:</h4>';
@@ -406,7 +401,13 @@
 
   // Evento click del botón de registro
   document.getElementById("registrarButton").addEventListener("click", mostrarMensajeRegistro);
+
+
+
 </script>
+
+ 
+
 
     
 
