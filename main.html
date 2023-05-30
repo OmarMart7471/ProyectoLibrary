@@ -24,10 +24,10 @@
     </button>
     <!-- Dropdown menu -->
     <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
-        <div class="px-4 py-3">
-          <span class="block text-sm text-gray-900 dark:text-white">Nombre usuario</span>
-          <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">corrreo_usuario@gmail.com</span>
-        </div>
+      <div class="px-4 py-3">
+        <span class="block text-sm text-gray-900 dark:text-white">Nombre usuario: <span id="nombreUsuario"></span></span>
+        <span class="block text-sm text-gray-500 truncate dark:text-gray-400">Correo electrónico: <span id="correoUsuario"></span></span>
+      </div>
         <ul class="py-2" aria-labelledby="user-menu-button">
           <li class="flex flex-grow items-center justify-center">
             <a href="#" 
@@ -144,10 +144,12 @@
             </div>
 
             
-              <div class="flex flex-col md:flex-row justify-center py-2 items-center text-gray-900">
-                <button class="px-6 py-2 transition ease-in duration-200 uppercase rounded-full hover:bg-blue-800 hover:text-white border-2 border-gray-900 focus:outline-none">
-                  Agregar al carrito</button>
-              </div>
+            <div class="flex flex-col md:flex-row justify-center py-2 items-center text-gray-900">
+              <button id="addToCartButton" class="px-6 py-2 transition ease-in duration-200 uppercase rounded-full hover:bg-blue-800 hover:text-white border-2 border-gray-900 focus:outline-none" onclick="addToCart()">
+                Agregar al carrito
+              </button>
+              
+            </div>
 
           </div>
         </div>
@@ -254,10 +256,40 @@
    </ul>
 </div>
 
- 
+<script>
+  // Metodo que manda a traer datos del usuario y se muestra en el main principal
+document.addEventListener("DOMContentLoaded", function() {
+// Obtener el usuario almacenado en localStorage
+var usuarioActual = localStorage.getItem("usuarioActual");
+if (usuarioActual) {
+  usuarioActual = JSON.parse(usuarioActual);
+  document.getElementById("nombreUsuario").textContent = usuarioActual.userName;
+  document.getElementById("correoUsuario").textContent = usuarioActual.email;
+}
+});
+</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 
   <script src="js/Search.js"></script>
+
+  <!-- Incluir SweetAlert2 desde el CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+  function addToCart() {
+    // Mostrar mensaje de confirmación
+    Swal.fire({
+      icon: 'success',
+      title: 'Libro agregado al carrito',
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
+</script>
+
+
+
   
+
 </body>
 </html>

@@ -7,11 +7,22 @@
     <title>LIBRERÍA</title>
 </head>
 
-
 <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
 <!--Replace with your tailwind.css once created-->
 <link href="https://unpkg.com/@tailwindcss/custom-forms/dist/custom-forms.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="css/login.css">
+
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+
+  html {
+    font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  }
+</style>
+<style>
+  .campo-vacio {
+    border: 1px solid red;
+  }
+</style>
 
 <body class="leading-normal tracking-normal text-white-400 m-6 bg-cover bg-fixed" style="background-image: url('images/library.jpg');">
     <div class="h-full">
@@ -37,7 +48,6 @@
           </h1>
 
           <div class="h-auto w-full rounded-md bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-1">
-          
 
          <form class="bg-gray-50 w-full shadow-lg rounded-lg px-8 pt-6 pb-8 opacity-100">
             <div class="m-4">
@@ -85,6 +95,107 @@
 
       </div>
     </div>
-<script src="./js/login.js"></script>
+
+<!-- Incluir SweetAlert2 desde el CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+       // Obtener una referencia al botón de ingresar mediante su ID
+  const botonIngresar = document.getElementById("ingresar");
+
+// Agregar un evento de clic al botón de ingresar
+botonIngresar.addEventListener("click", function () {
+  // Obtener el valor del campo de nombre de usuario y contraseña
+  const nombreUsuario = document.getElementById("userName").value;
+  const password = document.getElementById("userPassword").value;
+
+  // Verificar si los campos están vacíos
+  if (nombreUsuario.trim() === "") {
+    document.getElementById("userName").classList.add("campo-vacio");
+  } else {
+    document.getElementById("userName").classList.remove("campo-vacio");
+  }
+
+  if (password.trim() === "") {
+    document.getElementById("userPassword").classList.add("campo-vacio");
+  } else {
+    document.getElementById("userPassword").classList.remove("campo-vacio");
+  }
+
+  // Verificar si los campos están vacíos
+  if (nombreUsuario.trim() === "" || password.trim() === "") {
+    // Mostrar mensaje de campos vacíos
+    Swal.fire({
+      icon: "error",
+      title: "Error de autenticación",
+      text: "Por favor, completa todos los campos.",
+    });
+  } else {
+    // Obtener los datos del usuario almacenados en localStorage
+    const usuariosRegistradosJSON = localStorage.getItem("usuariosRegistrados");
+
+    // Verificar si hay usuarios registrados en localStorage
+    if (usuariosRegistradosJSON) {
+      // Convertir la cadena JSON a un array de usuarios
+      const usuariosRegistrados = JSON.parse(usuariosRegistradosJSON);
+
+      // Buscar el usuario en el array de usuarios registrados
+      const usuarioEncontrado = usuariosRegistrados.find(function(usuario) {
+        return usuario.userName === nombreUsuario && usuario.password === password;
+      });
+
+      // Verificar si se encontró el usuario
+      if (usuarioEncontrado) {
+        Swal.fire({
+          icon: "success",
+          title: "¡Bienvenido!",
+          text: "¡Bienvenido, " + usuarioEncontrado.fullName + "!",
+        });
+
+        // Almacenar los datos del usuario en localStorage
+        localStorage.setItem("usuarioActual", JSON.stringify(usuarioEncontrado));
+
+        // Redirigir a la página principal después del inicio de sesión exitoso
+        window.location.href = "main.html";
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error de autenticación",
+          text: "Nombre de usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.",
+        });
+      }
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title: "No se encontró ningún usuario registrado",
+        text: "Por favor, regístrate primero.",
+      });
+    }
+  }
+});
+
+    
+      // Obtener una referencia al botón de registrar mediante su ID
+      const botonRegistrar = document.getElementById("registrar");
+    
+      // Agregar un evento de clic al botón de registrar
+      botonRegistrar.addEventListener("click", function() {
+        // Obtener la URL base actual
+        const urlActual = window.location.href;
+        const urlBase = urlActual.substring(0, urlActual.lastIndexOf("/") + 1);
+    
+        // Concatenar la URL base con la ruta de la página de registro
+        const rutaRegistro = "RegistroU.html";
+        const enlaceRegistro = urlBase + rutaRegistro;
+    
+        // Redirigir a la página de registro
+        window.location.href = enlaceRegistro;
+      });
+    </script>
+    
+    
+
+
+
   </body>
 </html>
