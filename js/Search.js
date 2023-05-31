@@ -2,6 +2,8 @@ let booksResult = []
 let carrito = []
 let pedido = []
 let pedidoProcesado = []
+let totalPedido = 0;
+let envio ;
 
 const mainBlock = document.querySelector("#bookList")
 const radioButtons = document.getElementsByName("default-radio");
@@ -62,60 +64,91 @@ const busquedaLibro = (event) => {
   };
 
 const pedidoEnviado = (event) =>{
-    event.preventDefault();
-    if (pedido.length === 0 || totalPedido <= 0) {
-        alert("No hay productos en el carrito o el precio total es 0.");
-        return;
-    }else{
-    
-      // Crear objeto con los datos del pedido
-      const pedidoObjeto = {
-        pedido: pedido,
-        total: totalPedido
-      };
-    
-      // Agregar el objeto al array de pedidos procesados
-      pedidoProcesado.push(pedidoObjeto);
-    }
-      // Limpiar carrito y pedido actual
-      clearCart();
-      clearCartContent()
-      pedido = [];
+  event.preventDefault();
+  if (pedido.length === 0 || totalPedido <= 0) {
+      alert("No hay productos en el carrito o el precio total es 0.");
+      return;
+  }else{
 
-      pedidoProcesado.forEach(pedidoTerminado,index => {
+    envio = obtenerEnvio();
+    console.log("valor del envio: "+envio)
+  
+    // Crear objeto con los datos del pedido
+    const pedidoObjeto = {
+      pedido: pedido,
+      total: totalPedido,
+      tipoEnvio: envio
+    };
+  
+    // Agregar el objeto al array de pedidos procesados
+    pedidoProcesado.push(pedidoObjeto);
 
-        let pedido = pedidoObjeto.pedido;
-        let total = pedidoObjeto.total;
+  }
+    // Limpiar carrito y pedido actual
+    clearCart();
+    clearCartContent()
+    pedido = [];
+    totalPedido = 0
 
-        let olList = document.createElement("ol")
-        olList.setAttribute("class","pl-5 mt-2 space-y-1 list-inside")
-        pedido.forEach((producto) => {
-            let titulo = producto.titulo
-            let cantidad = producto.cantidad
-            let precio = producto.precio
 
-            olList.innerHTML = 
-            `
-            <li>Titulo: ${titulo}</li>
-            <li>Cantidad: ${cantidad}</li>
-            <li>Precio: ${precio}</li>
-            `
-        })
-        olList.innerHTML = 
-            `
-            <ol>Total = $${total} MXN</ol>
-            `
-        cartlist.appendChild(olList)
-    })
+    cartlist.innerHTML=""
 
+    pedidoProcesado.forEach((pedidoElement, index) => {
+
+
+      let element = document.createElement("li");
+      element.innerText = "Pedido[" + index + "]";
+      
+      let olGroup = document.createElement("ol");
+      olGroup.setAttribute("class","pl-5 mt-2 space-y-1 list-inside")
+      let eachBook = []
+      eachBook = pedidoElement.pedido
+      eachBook.forEach(libro =>{
+
+        olGroup.innerHTML +=
+        `
+          <li>Titulo: ${libro.titulo}</li>
+          <li>Cantidad: ${libro.cantidad}</li>
+          <li>Precio: $${libro.precio}</li>
+
+          <hr class="my-4" />
+        `
+      })
+
+      element.appendChild(olGroup)
+
+      let olTotal = document.createElement("ol")
+      olTotal.setAttribute("class","pl-5 mt-2 space-y-1 list-inside")
+
+      olTotal.innerHTML = 
+      `
+      <li class="text-green-500">Total = $${pedidoElement.total} </li>
+      `
+      element.appendChild(olTotal)
+
+      let olEnvio = document.createElement("ol")
+      olEnvio.setAttribute("class","pl-5 mt-2 space-y-1 list-inside")
+
+      olEnvio.innerHTML = 
+      `
+      <li class="text-gray-700">Tipo de envío: ${pedidoElement.tipoEnvio} </li>
+      `
+      
+      element.appendChild(olEnvio)
+
+
+      cartlist.appendChild(element);
+    });
+
+    console.log(pedidoProcesado)
+    // Mostrar mensaje de pedido enviado
+    alert("Pedido enviado correctamente.");
 }
   
 const renderList = (data,input) => {
     let booksList = data.items;
     console.log("List by "+input);
     console.log(booksList);
-
-    let totalPedido = 0;
 
     booksList.forEach(bookElement => {
 
@@ -173,7 +206,7 @@ const renderList = (data,input) => {
 
             
               <div class="flex flex-col md:flex-row justify-center py-2 items-center text-gray-900">
-                <button id="addCart-${id}" class="px-6 py-2 transition ease-in duration-200 uppercase rounded-full hover:bg-blue-800 hover:text-white border-2 border-gray-900 focus:outline-none">
+                <button id="addCart-${id}" onclick="addToCart()" class="px-6 py-2 transition ease-in duration-200 uppercase rounded-full hover:bg-blue-800 hover:text-white border-2 border-gray-900 focus:outline-none">
                   Agregar al carrito</button>
               </div>
 
@@ -200,15 +233,19 @@ const renderList = (data,input) => {
               cantidad: 1,
               idCart: id
             };
+
             let precioPorLibro = bookData.cantidad * bookData.precio
             totalPedido += precioPorLibro
             cantidadAnterior = bookData.cantidad 
             pedido.push(bookData);
 
-            
+            let color = seleccionarColorAlAzar();
+
+            let classNameCard = "flex-shrink-0 m-6 relative overflow-hidden bg-"+color+"-500 rounded-lg max-w-xs shadow-lg"
+
             // Crear un nuevo elemento div para representar la tarjeta del producto
             let productCard = document.createElement("div");
-            productCard.className = "flex-shrink-0 m-6 relative overflow-hidden bg-purple-500 rounded-lg max-w-xs shadow-lg";
+            productCard.className = classNameCard;
             cart.appendChild(productCard);
 
             // Establecer el contenido HTML de la tarjeta del producto
@@ -336,12 +373,9 @@ const renderList = (data,input) => {
   const clearContent = () => {
     mainBlock.innerHTML = "";
   };
-
   const clearCart = () => {
     cart.innerHTML = ""
-
   }
-
   const clearCartContent = () => {
     productList.innerHTML="";
     totalCart.innerText= "$0 MXN"
@@ -375,8 +409,56 @@ const renderList = (data,input) => {
   
     return null; // Si no se seleccionó ningún radio button
   }
+
+const hideAllButtons = () => {
+    const buttons = document.querySelectorAll("button[id^='addCart-']");
+    buttons.forEach((button) => {
+      button.style.display = "none";
+    });
+};
+
+const seleccionarColorAlAzar = () =>{
+  var colores = ["teal","red","purple","yellow"];
+  var indice = Math.floor(Math.random() * colores.length);
+  return colores[indice];
+}
+
+const iniciarConteo = () =>{
+    const tiempoActual = new Date().getTime();
+    const tiempoDeseado = tiempoActual + 1 * 60 * 1000;
   
- 
+  
+    const intervalo = setInterval(() => {
+      const tiempoRestante = tiempoDeseado - new Date().getTime();
+
+      const minutos = Math.floor(tiempoRestante / 1000 / 60);
+      const segundos = Math.floor((tiempoRestante / 1000) % 60);
+  
+      const tiempoInput = document.getElementById("tiempo");
+      tiempoInput.value = `${minutos} minutos ${segundos} segundos`;
+  
+      if (tiempoRestante <= 0) {
+        alert("¡Se ha realizado la entrega :D!");
+  
+  
+        clearInterval(intervalo);
+      }
+    }, 1000);
+}
+
+function obtenerEnvio() {
+  const butttonSelect = document.getElementsByName("flexRadioDefault");
+  let ratioSeleccionado = null;
+
+  butttonSelect.forEach((radio) => {
+    if (radio.checked) {
+      ratioSeleccionado = radio.value;
+    }
+  });
+
+  return ratioSeleccionado;
+}
+
 document.getElementById("btnSearch").addEventListener("click", busquedaLibro);
   
 document.getElementById("confirmarPedido").addEventListener("click", pedidoEnviado);
